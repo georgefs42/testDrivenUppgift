@@ -1,24 +1,52 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                              https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+=======
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+         
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.5.3</version> <!-- Updated version -->
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+>>>>>>> 2e95877fe9175d8e49a9927e86737028dda8789f
     <groupId>se.reky.hakan.sti.tdd</groupId>
     <artifactId>mocking</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>projektuppgift</name>
     <description>Demo project for Spring Boot</description>
+<<<<<<< HEAD
     <packaging>jar</packaging> <!-- Specify the packaging type -->
+=======
+         
+>>>>>>> 2e95877fe9175d8e49a9927e86737028dda8789f
     <properties>
-        <java.version>17</java.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+<<<<<<< HEAD
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.2.4</version>
         <relativePath/>
     </parent>
+=======
+         
+    <!-- Dependencies and build configuration remain unchanged -->
+</project>
+
+         
+>>>>>>> 2e95877fe9175d8e49a9927e86737028dda8789f
     <dependencies>
         <!-- Dependencies -->
         <dependency>
@@ -83,4 +111,10 @@
             </plugin>
         </plugins>
     </build>
+<<<<<<< HEAD
 </project>
+=======
+
+</project>
+ 
+>>>>>>> 2e95877fe9175d8e49a9927e86737028dda8789f
