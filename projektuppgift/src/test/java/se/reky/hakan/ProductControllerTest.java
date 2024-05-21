@@ -1,5 +1,6 @@
 package se.reky.hakan;
 
+// Importera nödvändiga klasser från Selenium och JUnit
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
@@ -14,73 +15,81 @@ import java.time.Duration;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+// Använd TestInstance för att dela samma instans av testklassen över alla tester
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ProductControllerTest {
 
+    // Deklarera WebDriver och WebDriverWait som instansvariabler
     private WebDriver driver;
     private WebDriverWait wait;
 
+    // Metoden som körs en gång före alla tester
     @BeforeAll
     public void setUp() {
-        // Set up WebDriverManager for Chrome
+        // Konfigurera WebDriverManager för Chrome
         WebDriverManager.chromedriver().setup();
 
-        // Initialize ChromeDriver
+        // Initiera ChromeDriver
         driver = new ChromeDriver();
 
-        // Initialize WebDriverWait with a timeout of 10 seconds
+        // Initiera WebDriverWait med en timeout på 10 sekunder
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-        // Navigate to the test URL
+        // Navigera till test-URL:en
         driver.get("http://localhost:8080/players");
     }
 
+    // Testar att antal spelare i listan är korrekt
     @Test
     public void testPlayerListCount() {
-        // Wait for the player list to be visible
+        // Vänta tills spelarlistan är synlig
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".player")));
 
-        // Verify correct number of players in the list
-        int expectedPlayerCount = 2; // Change according to your test scenario
+        // Verifiera att antalet spelare i listan är som förväntat
+        int expectedPlayerCount = 2; // Ändra enligt ditt testscenario
         int actualPlayerCount = driver.findElements(By.cssSelector(".player")).size();
         assertEquals(expectedPlayerCount, actualPlayerCount);
     }
 
+    // Testar att namnet på första spelaren visas
     @Test
     public void testFirstPlayerNameDisplayed() {
-        // Wait for the first player's name to be visible
+        // Vänta tills namnet på första spelaren är synligt
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".player:nth-of-type(1) .name")));
 
-        // Verify that the name of the first player is displayed on the page
+        // Verifiera att namnet på första spelaren visas på sidan
         WebElement firstPlayerName = driver.findElement(By.cssSelector(".player:nth-of-type(1) .name"));
         assertTrue(firstPlayerName.isDisplayed());
     }
 
+    // Testar att sidtiteln är korrekt
     @Test
     public void testPageTitle() {
-        // Wait for the page title to contain the expected title
+        // Vänta tills sidtiteln innehåller det förväntade värdet
         wait.until(ExpectedConditions.titleContains("Your Expected Title"));
 
-        // Test that the page title matches the expected value
+        // Testa att sidtiteln matchar det förväntade värdet
         String expectedTitle = "Your Expected Title";
         String actualTitle = driver.getTitle();
         assertEquals(expectedTitle, actualTitle);
     }
 
+    // Testar att login-knappen är korrekt
     @Test
     public void testLoginButton() {
-        // Wait for the login button to be visible
+        // Vänta tills login-knappen är synlig
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("loginButton")));
 
-        // Test that the login button has the expected text
+        // Testa att login-knappen har den förväntade texten
         WebElement loginButton = driver.findElement(By.id("loginButton"));
         String expectedButtonText = "Logga in";
         assertEquals(expectedButtonText, loginButton.getText());
     }
 
+    // Metoden som körs en gång efter alla tester
     @AfterAll
     public void tearDown() {
-        // Close the WebDriver after all tests are finished
+        // Stäng WebDriver efter att alla tester är klara
         if (driver != null) {
             driver.quit();
         }

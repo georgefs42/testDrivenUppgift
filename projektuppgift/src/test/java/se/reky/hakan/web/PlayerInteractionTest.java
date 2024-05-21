@@ -1,5 +1,6 @@
 package se.reky.hakan.web;
 
+// Importerar nödvändiga klasser och paket från JUnit och projektet
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -13,62 +14,64 @@ import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@Nested
+@Nested // Anger att denna klass innehåller grupperade tester
 class PlayerInteractionTest {
 
+    // Deklarerar instanser av SimplePlayerInteraction och Player
     private SimplePlayerInteraction playerInteraction;
     private Player player;
 
+    // Metod för att sätta upp testmiljön innan varje test
     private void setUp() {
-        // Create an IOHandler instance for SimplePlayerInteraction constructor
-        InputStream inputStream = new ByteArrayInputStream("John\n".getBytes()); // Provide mock input
+        // Skapar en IOHandler-instans för SimplePlayerInteraction-konstruktorn
+        InputStream inputStream = new ByteArrayInputStream("John\n".getBytes()); // Tillhandahåller mock-input
         Scanner scanner = new Scanner(inputStream);
         IOHandler ioHandler = new IOHandler(scanner);
 
-        // Initialize SimplePlayerInteraction with the created IOHandler
+        // Initialiserar SimplePlayerInteraction med den skapade IOHandler
         playerInteraction = new SimplePlayerInteraction(ioHandler);
-        player = new Player("John", 100, 10);
+        player = new Player("John", 100, 10); // Skapar en ny Player-instans med namn, hp och attack
     }
 
-    @Test
+    @Test // Markerar detta som ett testfall
     public void testSomeInteraction() {
-        setUp(); // Call setUp() before each test method
-        // Test logic here
-        assertNotNull(playerInteraction);
-        assertNotNull(player);
+        setUp(); // Anropar setUp() före varje testmetod
+        // Testlogik här
+        assertNotNull(playerInteraction); // Kontrollera att playerInteraction inte är null
+        assertNotNull(player); // Kontrollera att player inte är null
     }
 
-    @Test
+    @Test // Markerar detta som ett testfall
     public void testAnotherInteraction() {
-        setUp(); // Call setUp() before each test method
-        // Another test logic here
-        assertNotNull(playerInteraction);
-        assertNotNull(player);
+        setUp(); // Anropar setUp() före varje testmetod
+        // Annan testlogik här
+        assertNotNull(playerInteraction); // Kontrollera att playerInteraction inte är null
+        assertNotNull(player); // Kontrollera att player inte är null
     }
 
-    // Test for setupPlayer method to ensure it sets player's name correctly
-    @Test
+    // Test för setupPlayer-metoden för att säkerställa att den sätter spelarens namn korrekt
+    @Test // Markerar detta som ett testfall
     public void testSetupPlayer() {
-        setUp(); // Call setUp() before each test method
-        // Act
+        setUp(); // Anropar setUp() före varje testmetod
+        // Act - Anropar setupPlayer-metoden på playerInteraction
         playerInteraction.setupPlayer(player);
 
-        // Assert
+        // Assert - Kontrollera att spelarens namn är korrekt inställt
         Assertions.assertEquals("John", player.getName());
     }
 
-    // Test for updatePlayerHealth method to ensure it updates player's health correctly
-    @Test
+    // Test för updatePlayerHealth-metoden för att säkerställa att den uppdaterar spelarens hälsa korrekt
+    @Test // Markerar detta som ett testfall
     public void testUpdatePlayerHealth() {
-        setUp(); // Call setUp() before each test method
-        // Arrange
-        int initialHealth = player.getHp();
-        int healthUpdate = 10;
+        setUp(); // Anropar setUp() före varje testmetod
+        // Arrange - Initiala hälsovärden
+        int initialHealth = player.getHp(); // Spara spelarens initiala hälsa
+        int healthUpdate = 10; // Definiera hälsouppdateringen
 
-        // Act
+        // Act - Anropar updatePlayerHealth-metoden på playerInteraction
         playerInteraction.updatePlayerHealth(player, healthUpdate);
 
-        // Assert
+        // Assert - Kontrollera att spelarens hälsa har uppdaterats korrekt
         Assertions.assertEquals(initialHealth + healthUpdate, player.getHp());
     }
 }
