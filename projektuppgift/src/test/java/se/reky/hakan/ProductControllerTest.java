@@ -1,97 +1,65 @@
 package se.reky.hakan;
 
-// Importera nödvändiga klasser från Selenium och JUnit
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-// Använd TestInstance för att dela samma instans av testklassen över alla tester
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ProductControllerTest {
 
-    // Deklarera WebDriver och WebDriverWait som instansvariabler
-    private WebDriver driver;
-    private WebDriverWait wait;
+    ChromeDriver driver;  // Instance of ChromeDriver for browser automation
 
-    // Metoden som körs en gång före alla tester
     @BeforeAll
-    public void setUp() {
-        // Konfigurera WebDriverManager för Chrome
-        WebDriverManager.chromedriver().setup();
-
-        // Initiera ChromeDriver
-        driver = new ChromeDriver();
-
-        // Initiera WebDriverWait med en timeout på 10 sekunder
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-
-        // Navigera till test-URL:en
-        driver.get("http://localhost:8080/players");
+    public static void BeforeAll () {
+        // Set up the ChromeDriver using WebDriverManager, which handles the binary for the appropriate version of ChromeDriver
+        WebDriverManager.chromedriver ().setup ();
     }
 
-    // Testar att antal spelare i listan är korrekt
+    @BeforeEach
+    public void setUp () {
+        // Initialize the ChromeDriver instance before each test
+        driver = new ChromeDriver ();
+        // Navigate to the specified URL before each test
+        driver.get ( "http://localhost:8080/players" );
+    }
+
     @Test
-    public void testPlayerListCount() {
-        // Vänta tills spelarlistan är synlig
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".player")));
-
-        // Verifiera att antalet spelare i listan är som förväntat
-        int expectedPlayerCount = 2; // Ändra enligt ditt testscenario
-        int actualPlayerCount = driver.findElements(By.cssSelector(".player")).size();
-        assertEquals(expectedPlayerCount, actualPlayerCount);
+    @DisplayName("List size should match played games")
+    public void verifyNumberOfPlayers () {
+        // Find all elements with the tag name "li" which represents the players in the list
+        List<WebElement> playerList = driver.findElements ( By.tagName ( "li" ) );
+        // Assert that the size of the player list is 1
+        Assertions.assertEquals ( playerList.size (), 1 );
     }
 
-    // Testar att namnet på första spelaren visas
     @Test
-    public void testFirstPlayerNameDisplayed() {
-        // Vänta tills namnet på första spelaren är synligt
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".player:nth-of-type(1) .name")));
-
-        // Verifiera att namnet på första spelaren visas på sidan
-        WebElement firstPlayerName = driver.findElement(By.cssSelector(".player:nth-of-type(1) .name"));
-        assertTrue(firstPlayerName.isDisplayed());
+    @DisplayName("First element in list should be shown")
+    public void verifyFirstNameOfPlayers () {
+        // Find all elements with the tag name "li" which represents the players in the list
+        List<WebElement> playerList = driver.findElements ( By.tagName ( "li" ) );
+        // Find the first player's name by looking for the element with class name "player-name" within the first list item
+        WebElement firstName = playerList.get ( 0 ).findElement ( By.className ( "player-name" ) );
+        // Assert that the first player's name is displayed
+        Assertions.assertTrue ( firstName.isDisplayed (), "First name should be displayed" );
     }
 
-    // Testar att sidtiteln är korrekt
     @Test
-    public void testPageTitle() {
-        // Vänta tills sidtiteln innehåller det förväntade värdet
-        wait.until(ExpectedConditions.titleContains("Your Expected Title"));
-
-        // Testa att sidtiteln matchar det förväntade värdet
-        String expectedTitle = "Your Expected Title";
-        String actualTitle = driver.getTitle();
-        assertEquals(expectedTitle, actualTitle);
+    @DisplayName("Title should match")
+    public void verifyTitle () {
+        // Assert that the title of the page is "Players List"
+        Assertions.assertEquals ( "Players List", driver.getTitle () );
     }
 
-    // Testar att login-knappen är korrekt
     @Test
-    public void testLoginButton() {
-        // Vänta tills login-knappen är synlig
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("loginButton")));
-
-        // Testa att login-knappen har den förväntade texten
-        WebElement loginButton = driver.findElement(By.id("loginButton"));
-        String expectedButtonText = "Logga in";
-        assertEquals(expectedButtonText, loginButton.getText());
+    @DisplayName("Button text should be - Logga in")
+    public void verifyButtonText () {
+        // Find the first button element on the page
+        WebElement button = driver.findElement ( By.tagName ( "button" ) );
+        // Assert that the button's text is "Logga in"
+        Assertions.assertEquals ( "Logga in", button.getText () );
     }
 
-    // Metoden som körs en gång efter alla tester
-    @AfterAll
-    public void tearDown() {
-        // Stäng WebDriver efter att alla tester är klara
-        if (driver != null) {
-            driver.quit();
-        }
-    }
 }
