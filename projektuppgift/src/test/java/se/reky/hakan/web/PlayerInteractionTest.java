@@ -14,7 +14,7 @@ import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@Nested // Anger att denna klass innehåller grupperade tester
+
 class PlayerInteractionTest {
 
     // Deklarerar instanser av SimplePlayerInteraction och Player
